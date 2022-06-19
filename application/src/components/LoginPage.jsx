@@ -5,10 +5,12 @@ import { Button, Card, Col, Container, FloatingLabel, Form, Row } from 'react-bo
 import axios from 'axios';
 import routes from '../utils/routes.js';
 import { useNavigate } from 'react-router-dom';
+import useAuth from '../hooks/useAuth.jsx';
 
 const LoginPage = () => {
   const [authFailed, setAuthFailed] = useState(false);
   const authFailedPhrase = 'Неверные имя пользователя или пароль';
+  const auth = useAuth();
   const navigate = useNavigate();
   const inputRef = useRef();
   useEffect(() => {
@@ -25,6 +27,7 @@ const LoginPage = () => {
         const response = await axios.post(routes.loginPath(), values);
         localStorage.setItem('userId', JSON.stringify(response.data));
         setAuthFailed(false);
+        auth.logIn();
         navigate('/');
       } catch (err) {
         if (err.isAxiosError && err.response.status === 401) {
