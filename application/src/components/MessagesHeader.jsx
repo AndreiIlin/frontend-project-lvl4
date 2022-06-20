@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CommentsHeader = () => {
+const MessagesHeader = () => {
 
   return (
     <div className="bg-light mb-4 p-3 shadow-sm small">
@@ -9,4 +9,4 @@ const CommentsHeader = () => {
   );
 };
 
-export default CommentsHeader;
+export default MessagesHeader;
