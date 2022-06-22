@@ -17,7 +17,7 @@ const MessagesBody = () => {
   const allMessages = useSelector(selectors.selectAll);
   const channelMessages = allMessages.filter(({ channelId }) => channelId === currentChannelId);
   return (
-    <div id="messages-box" className="chat-messages overflow-auto px-5 ">
+    <div id="messages-box" className="chat-messages overflow-auto px-5">
       {channelMessages && channelMessages.map((m) => (
         <Message username={m.username} body={m.body} key={m.id} />
       ))}

@@ -19,7 +19,7 @@ const MessagesFooter = () => {
     username,
     channelId,
   };
-  const { socket } = useSocket();
+  const socket = useSocket();
   const sendMessage = (e) => {
     e.preventDefault();
     socket.emit('newMessage', outgoingMessage, (response) => {
