@@ -6,8 +6,12 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
-const Rename = ({ onHide, modalInfo }) => {
+const Rename = ({
+  onHide,
+  modalInfo,
+}) => {
   const { t } = useTranslation('translation', { keyPrefix: 'modals' });
   const socket = useSocket();
   const [disabled, setDisabled] = useState(false);
@@ -28,17 +32,22 @@ const Rename = ({ onHide, modalInfo }) => {
     }),
     onSubmit: () => {
       setDisabled(true);
-      socket.emit('renameChannel', { id: modalInfo.item.id, name: formik.values.name }, (response) => {
+      socket.emit('renameChannel', {
+        id: modalInfo.item.id,
+        name: formik.values.name,
+      }, (response) => {
         if (response.status === 'ok') {
+          toast.success(t('renameSuccess'));
           onHide();
         } else {
-          alert(t('networkError'));
+          toast.error(t('networkError'), {
+            position: 'top-center',
+          });
           setDisabled(false);
         }
       });
     },
   });
-
   return (
     <Modal show onHide={onHide}>
       <Modal.Header closeButton>
@@ -67,5 +76,4 @@ const Rename = ({ onHide, modalInfo }) => {
     </Modal>
   );
 };
-
 export default Rename;

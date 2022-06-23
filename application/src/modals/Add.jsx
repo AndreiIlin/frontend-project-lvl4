@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeChannel, selectors } from '../slices/channelsSlice.js';
 import useSocket from '../hooks/useSocket.jsx';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 const Add = ({ onHide }) => {
   const { t } = useTranslation('translation', { keyPrefix: 'modals' });
@@ -32,9 +33,12 @@ const Add = ({ onHide }) => {
       socket.emit('newChannel', formik.values, (response) => {
         if (response.status === 'ok') {
           dispatch(changeChannel(response.data.id));
+          toast.success(t('addSuccess'));
           onHide();
         } else {
-          alert(t('networkError'));
+          toast.error(t('networkError'), {
+            position: 'top-center',
+          });
           setDisabled(false);
         }
       });

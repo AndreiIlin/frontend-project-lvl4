@@ -15,6 +15,8 @@ import SocketProvider from '../providers/SocketProvider.jsx';
 import RegistrationPage from './RegistrationPage.jsx';
 import i18n from '../i18n.js';
 import { I18nextProvider } from 'react-i18next';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PrivateRoute = ({ children }) => {
   const auth = useAuth();
@@ -43,6 +45,7 @@ const App = () => {
               <Route path="*" element={<Page404 />} />
             </Routes>
           </div>
+          <ToastContainer />
         </Router>
       </AuthProvider>
     </SocketProvider>
