@@ -1,14 +1,15 @@
 import * as Yup from 'yup';
+import i18n from '../i18n.js';
 
 export default Yup.object().shape({
   username: Yup.string()
-    .required('Поле "Имя пользователя" обязательно для заполнения!')
-    .min(3, 'Длина имени должна быть более 3 символов')
-    .max(20, 'Длина имени должна быть менее 20 символов'),
+    .required(i18n.t('registrationPage.errors.usernameReq'))
+    .min(3, i18n.t('registrationPage.errors.usernameMin'))
+    .max(20, i18n.t('registrationPage.errors.usernameMax')),
   password: Yup.string()
-    .required('Поле "Пароль" обязательно для заполнения!')
-    .min(6, 'Пароль должен быть не менее 6 символов'),
+    .required(i18n.t('registrationPage.errors.passwordReq'))
+    .min(6, i18n.t('registrationPage.errors.passwordMin')),
   passwordConfirmation: Yup.string()
-    .required('Поле "Повторите пароль" обязательно для заполнения!')
-    .oneOf([Yup.ref('password')], 'Пароли должны совпадать'),
+    .required(i18n.t('registrationPage.errors.passwordConfirmationReq'))
+    .oneOf([Yup.ref('password')], i18n.t('registrationPage.errors.passwordConfirmationSame')),
 });

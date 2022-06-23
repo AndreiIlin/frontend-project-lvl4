@@ -13,6 +13,8 @@ import NavbarLayout from './NavbarLayout.jsx';
 import AuthProvider from '../providers/AuthProvider.jsx';
 import SocketProvider from '../providers/SocketProvider.jsx';
 import RegistrationPage from './RegistrationPage.jsx';
+import i18n from '../i18n.js';
+import { I18nextProvider } from 'react-i18next';
 
 const PrivateRoute = ({ children }) => {
   const auth = useAuth();
@@ -20,23 +22,31 @@ const PrivateRoute = ({ children }) => {
     auth.loggedIn ? children : <Navigate to="/login" />
   );
 };
+const AuthUsersRoute = ({ children }) => {
+  const auth = useAuth();
+  return (
+    auth.loggedIn ?  <Navigate to="/" /> : children
+  );
+};
 const App = () => {
   return (
+    <I18nextProvider i18n={i18n}>
     <SocketProvider>
       <AuthProvider>
         <Router>
           <div className="d-flex flex-column h-100">
             <NavbarLayout />
             <Routes>
-              <Route path="/" element={(<PrivateRoute><ChatPage /></PrivateRoute>)} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/signup" element={<RegistrationPage />} />
+              <Route path="/" element={<PrivateRoute><ChatPage /></PrivateRoute>} />
+              <Route path="/login" element={<AuthUsersRoute><LoginPage /></AuthUsersRoute>} />
+              <Route path="/signup" element={<AuthUsersRoute><RegistrationPage /></AuthUsersRoute>} />
               <Route path="*" element={<Page404 />} />
             </Routes>
           </div>
         </Router>
       </AuthProvider>
     </SocketProvider>
+    </I18nextProvider>
   );
 };
 export default App;

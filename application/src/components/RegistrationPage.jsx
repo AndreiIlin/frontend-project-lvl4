@@ -6,11 +6,12 @@ import { Button, Card, Col, Container, FloatingLabel, Form, Row } from 'react-bo
 import useAuth from '../hooks/useAuth.jsx';
 import axios from 'axios';
 import routes from '../utils/routes.js';
+import { useTranslation } from 'react-i18next';
 
 
 const RegistrationPage = () => {
   const [authFailed, setAuthFailed] = useState(false);
-  const authFailedPhrase = 'Пользователь с таким именем уже существует';
+  const { t } = useTranslation('translation', { keyPrefix: 'registrationPage' });
   const navigate = useNavigate();
   const inputRef = useRef();
   const auth = useAuth();
@@ -49,11 +50,11 @@ const RegistrationPage = () => {
           <Card className="shadow-sm">
             <Card.Body className="p-5">
               <Form onSubmit={formik.handleSubmit}>
-                <h1 className="text-center mb-4">Регистрация</h1>
-                <FloatingLabel label="Имя пользователя" controlId="username" className="mb-3">
+                <h1 className="text-center mb-4">{t('page.registration')}</h1>
+                <FloatingLabel label={t('page.username')} controlId="username" className="mb-3">
                   <Form.Control
                     name="username"
-                    placeholder="Имя пользователя"
+                    placeholder={t('page.username')}
                     ref={inputRef}
                     value={formik.values.username}
                     onChange={formik.handleChange}
@@ -61,29 +62,29 @@ const RegistrationPage = () => {
                   />
                   <Form.Control.Feedback type="invalid">{formik.errors.username}</Form.Control.Feedback>
                 </FloatingLabel>
-                <FloatingLabel label="Пароль" controlId="password" className="mb-3">
+                <FloatingLabel label={t('page.password')} controlId="password" className="mb-3">
                   <Form.Control
                     type="password"
                     name="password"
-                    placeholder="Пароль"
+                    placeholder={t('page.password')}
                     value={formik.values.password}
                     onChange={formik.handleChange}
                     isInvalid={(formik.touched.password && !!formik.errors.password) || authFailed}
                   />
                   <Form.Control.Feedback type="invalid">{formik.errors.password}</Form.Control.Feedback>
                 </FloatingLabel>
-                <FloatingLabel label="Повторите пароль" controlId="passwordConfirmation" className="mb-3">
+                <FloatingLabel label={t('page.passwordConfirmation')} controlId="passwordConfirmation" className="mb-3">
                   <Form.Control
                     type="password"
                     name="passwordConfirmation"
-                    placeholder="Повторите пароль"
+                    placeholder={t('page.passwordConfirmation')}
                     value={formik.values.passwordConfirmation}
                     onChange={formik.handleChange}
                     isInvalid={(formik.touched.passwordConfirmation && !!formik.errors.passwordConfirmation) || authFailed}
                   />
-                  <Form.Control.Feedback type="invalid">{formik.errors.passwordConfirmation ?? authFailedPhrase}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">{formik.errors.passwordConfirmation ?? t('errors.regFailedPhrase')}</Form.Control.Feedback>
                 </FloatingLabel>
-                <Button variant="outline-primary" type="submit">Зарегистрироваться</Button>
+                <Button variant="outline-primary" type="submit">{t('page.register')}</Button>
               </Form>
             </Card.Body>
           </Card>

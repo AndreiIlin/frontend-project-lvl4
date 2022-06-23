@@ -6,10 +6,11 @@ import axios from 'axios';
 import routes from '../utils/routes.js';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth.jsx';
+import { useTranslation } from 'react-i18next';
 
 const LoginPage = () => {
   const [authFailed, setAuthFailed] = useState(false);
-  const authFailedPhrase = 'Неверные имя пользователя или пароль';
+  const { t } = useTranslation('translation', { keyPrefix: 'loginPage' });
   const auth = useAuth();
   const navigate = useNavigate();
   const inputRef = useRef();
@@ -46,11 +47,11 @@ const LoginPage = () => {
           <Card className="shadow-sm">
             <Card.Body className="p-5">
               <Form onSubmit={formik.handleSubmit}>
-                <h1 className="text-center mb-4">Войти</h1>
-                <FloatingLabel label="Ваш ник" controlId="username" className="mb-3">
+                <h1 className="text-center mb-4">{t('page.enter')}</h1>
+                <FloatingLabel label={t('page.username')} controlId="username" className="mb-3">
                   <Form.Control
                     name="username"
-                    placeholder="Ваш ник"
+                    placeholder={t('page.username')}
                     ref={inputRef}
                     value={formik.values.username}
                     onChange={formik.handleChange}
@@ -58,24 +59,24 @@ const LoginPage = () => {
                   />
                   <Form.Control.Feedback type="invalid">{formik.errors.username}</Form.Control.Feedback>
                 </FloatingLabel>
-                <FloatingLabel label="Пароль" controlId="password" className="mb-3">
+                <FloatingLabel label={t('page.password')} controlId="password" className="mb-3">
                   <Form.Control
                     type="password"
                     name="password"
-                    placeholder="Пароль"
+                    placeholder={t('page.password')}
                     value={formik.values.password}
                     onChange={formik.handleChange}
                     isInvalid={(formik.touched.password && !!formik.errors.password) || authFailed}
                   />
-                  <Form.Control.Feedback type="invalid">{formik.errors.password ?? authFailedPhrase}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">{formik.errors.password ?? t('errors.authFailedPhrase')}</Form.Control.Feedback>
                 </FloatingLabel>
-                <Button variant="outline-primary" type="submit">Войти</Button>
+                <Button variant="outline-primary" type="submit">{t('page.enter')}</Button>
               </Form>
             </Card.Body>
             <Card.Footer>
               <div className="text-center">
-                <span>Нет аккаунта? </span>
-                <Link to={'/signup'}>Регистрация</Link>
+                <span>{t('page.haveAcc')} </span>
+                <Link to={'/signup'}>{t('page.registration')}</Link>
               </div>
             </Card.Footer>
           </Card>

@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import useSocket from '../hooks/useSocket.jsx';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 const MessagesFooter = () => {
+  const { t } = useTranslation('translation', { keyPrefix: 'messages' });
   const [message, setMessage] = useState('');
   const inputRef = useRef();
   useEffect(() => {
@@ -26,7 +28,7 @@ const MessagesFooter = () => {
       if (response.status === 'ok') {
         setMessage('');
       } else {
-        alert('Проблемы с интернет подключением');
+        alert(t('networkError'));
       }
     });
   };
@@ -37,13 +39,13 @@ const MessagesFooter = () => {
           <Form.Control
             name="body"
             className="border-0 p-0 ps-2"
-            placeholder="Введите сообщение..."
-            aria-label="Новое сообщение"
+            placeholder={t('addMessagePlaceholder')}
+            aria-label={t('addMessageLabel')}
             value={message}
             onChange={messageHandler}
             ref={inputRef}
           />
-          <Button type="submit" variant="primary" disabled={message === ''} onClick={sendMessage}>Add</Button>
+          <Button type="submit" variant="primary" disabled={message === ''} onClick={sendMessage}>{t('addButton')}</Button>
         </InputGroup>
       </Form>
     </div>

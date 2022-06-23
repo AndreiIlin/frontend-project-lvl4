@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import useSocket from '../hooks/useSocket.jsx';
+import { useTranslation } from 'react-i18next';
 
 const Remove = ({ onHide, modalInfo }) => {
+  const { t } = useTranslation('translation', { keyPrefix: 'modals' });
   const [disabled, setDisabled] = useState(false);
   const socket = useSocket();
 
@@ -13,7 +15,7 @@ const Remove = ({ onHide, modalInfo }) => {
       if (response.status === 'ok') {
         onHide();
       } else {
-        alert('Проблемы с интернет подключением');
+        alert(t('networkError'));
         setDisabled(false);
       }
     })
@@ -22,13 +24,13 @@ const Remove = ({ onHide, modalInfo }) => {
   return (
     <Modal show onHide={onHide}>
       <Modal.Header closeButton>
-        <Modal.Title>Удалить канал</Modal.Title>
+        <Modal.Title>{t('remove')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <span className="lead">Уверены?</span>
+        <span className="lead">{t('removeConfirmation')}</span>
         <div className="d-flex justify-content-end">
-          <Button variant="secondary" type="button" onClick={onHide} className="me-2">Отменить</Button>
-          <Button variant="danger" type="button" onClick={deleteChannel} disabled={disabled}>Удалить</Button>
+          <Button variant="secondary" type="button" onClick={onHide} className="me-2">{t('buttons.cancel')}</Button>
+          <Button variant="danger" type="button" onClick={deleteChannel} disabled={disabled}>{t('buttons.delete')}</Button>
         </div>
       </Modal.Body>
     </Modal>

@@ -5,6 +5,7 @@ import App from './components/App.jsx';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './slices/index.js';
+import i18n from './i18n.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
