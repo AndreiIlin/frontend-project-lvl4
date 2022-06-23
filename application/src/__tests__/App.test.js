@@ -3,6 +3,6 @@ import App from '../components/App.jsx';
 
 test('renders learn react link', () => {
   render(<App />);
-  const linkElement = screen.getByText(/Hello World/i);
+  const linkElement = screen.getByText(/Hexlet Chat/i);
   expect(linkElement).toBeInTheDocument();
 });
