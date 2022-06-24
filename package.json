@@ -1,0 +1,25 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "hexlet-frontend-project-lvl4",
+  "main": "application/src/index.js",
+  "type": "module",
+  "scripts": {
+    "install": "make install",
+    "start-backend": "make start-backend",
+    "start-frontend": "make start-frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndreiIlin/frontend-project-lvl4.git"
+  },
+  "keywords": [
+    "hexlet"
+  ],
+  "author": "Andrei Ilin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndreiIlin/frontend-project-lvl4/issues"
+  },
+  "homepage": "https://github.com/AndreiIlin/frontend-project-lvl4#readme"
+}
