@@ -1,10 +1,7 @@
 start-backend:
-		cd server && npm start
+	make -C server start
 start-frontend:
-		cd application && npm start
+	make -C application start
 install:
-		cd server
-		npm ci
-		cd ..
-		cd application
-		npm ci
+	make -C server install
+	make -C application install
