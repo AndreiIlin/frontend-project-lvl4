@@ -88,13 +88,12 @@ const Channels = () => {
   return (
     <Col xs={4} md={2} className="border-end pt-4 px-0 bg-light" >
       <div className="d-flex flex-wrap justify-content-between align-items-center mb-2 ps-2 ps-xxl-4 ps-xl-3 pb-3 pe-2 border-bottom border-2">
-        <span className="mb-2 mb-lg-0">{t('channels')}</span>
+        <span>{t('channels')}</span>
         <Button
-          variant="success"
+          variant="outline-primary"
           type="button"
-          className="p-1 p-xl-2"
           onClick={() => showModal('adding')}
-        >{t('add')}</Button>
+        >+</Button>
       </div>
       <Nav as="ul" fill variant="pills" className="px-2">
         {channels.map((channel) => (
