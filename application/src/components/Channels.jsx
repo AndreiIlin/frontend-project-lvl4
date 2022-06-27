@@ -49,7 +49,9 @@ const RemovableChannel = ({
           {channel.name}
         </Button>
         <Dropdown.Toggle variant={channel.id === currentChannelId ? 'secondary' : 'none'} className="flex-grow-0"
-                         aria-expanded="false" />
+                         aria-expanded="false">
+          <span className="visually-hidden">{t('control')}</span>
+        </Dropdown.Toggle>
         <Dropdown.Menu>
           <Dropdown.Item onClick={() => showModal('removing', channel)}>{t('remove')}</Dropdown.Item>
           <Dropdown.Item onClick={() => showModal('renaming', channel)}>{t('rename')}</Dropdown.Item>

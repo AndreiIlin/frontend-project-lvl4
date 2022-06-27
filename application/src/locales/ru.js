@@ -43,7 +43,7 @@ export default {
     },
     channels: {
       channels: 'Каналы',
-      add: 'Добавить',
+      control: 'Управление каналом',
       rename: 'Переименовать',
       remove: 'Удалить',
     },
