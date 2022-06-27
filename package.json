@@ -8,7 +8,6 @@
     "install": "make install",
     "start-backend": "make start-backend",
     "start-frontend": "make start-frontend",
-    "start": "make start-backend & make start-frontend"
   },
   "repository": {
     "type": "git",
