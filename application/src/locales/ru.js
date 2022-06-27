@@ -57,7 +57,7 @@ export default {
       addSuccess: 'Канал создан',
       remove: 'Удалить канал',
       removeConfirmation: 'Уверены?',
-      removeSuccess: 'Канал удален',
+      removeSuccess: 'Канал удалён',
       rename: 'Переименовать канал',
       renameLabel: 'Имя канала',
       renamePlaceholder: 'Введите новое название канала',
