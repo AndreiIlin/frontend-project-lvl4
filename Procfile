@@ -1,2 +1,2 @@
-web: make start-backend
-frontend: make start-frontend
+worker: make start-backend
+web: make start-frontend
