@@ -7,7 +7,7 @@
   "scripts": {
     "install": "make install",
     "start-backend": "make start-backend",
-    "start-frontend": "make start-frontend",
+    "start-frontend": "make start-frontend"
   },
   "repository": {
     "type": "git",
