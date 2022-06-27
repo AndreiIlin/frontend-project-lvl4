@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, ButtonGroup, Col, Dropdown, Nav } from 'react-bootstrap';
+import { Button, ButtonGroup, Col, Dropdown, Nav, Navbar } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeChannel, selectors } from '../slices/channelsSlice.js';
 import getModal from '../modals/index.js';
@@ -38,7 +38,7 @@ const RemovableChannel = ({
   const dispatch = useDispatch();
   const { t } = useTranslation('translation', { keyPrefix: 'channels' });
   return (
-    <Nav.Item as="li" className="w-100" >
+    <Nav.Item as="li" className="w-100">
       <Dropdown as={ButtonGroup} className="d-flex">
         <Button
           variant={channel.id === currentChannelId ? 'secondary' : 'none'}
@@ -84,13 +84,15 @@ const Channels = () => {
     type,
     item,
   });
+
   return (
-    <Col xs={4} md={2} className="border-end pt-5 px-0 bg-light">
-      <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
-        <span>{t('channels')}</span>
+    <Col xs={4} md={2} className="border-end pt-4 px-0 bg-light" >
+      <div className="d-flex flex-wrap justify-content-between align-items-center mb-2 ps-2 ps-xxl-4 ps-xl-3 pb-3 pe-2 border-bottom border-2">
+        <span className="mb-2 mb-lg-0">{t('channels')}</span>
         <Button
+          variant="success"
           type="button"
-          className="p-1"
+          className="p-1 p-xl-2"
           onClick={() => showModal('adding')}
         >{t('add')}</Button>
       </div>

@@ -45,7 +45,13 @@ const MessagesFooter = () => {
             onChange={messageHandler}
             ref={inputRef}
           />
-          <Button type="submit" variant="primary" disabled={message === ''} onClick={sendMessage}>{t('addButton')}</Button>
+          <Button
+            type="submit"
+            variant="outline-primary"
+            disabled={message === ''}
+            onClick={sendMessage}
+            className="rounded"
+          >{t('addButton')}</Button>
         </InputGroup>
       </Form>
     </div>
