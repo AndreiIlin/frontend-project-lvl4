@@ -9,7 +9,8 @@ const Message = ({
 }) => (
   <div className="text-break mb-2">
     <b>{username}</b>
-    : {filter.clean(body)}
+    {': '}
+    {filter.clean(body)}
   </div>
 );
 const MessagesBody = () => {

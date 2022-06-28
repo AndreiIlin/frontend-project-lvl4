@@ -2,7 +2,7 @@ export default {
   translation: {
     page404: {
       pageNotFound: 'Страница не найдена',
-      navigate: 'Но вы можете перейти',
+      navigate: 'Но вы можете перейти ',
       mainPage: 'на главную страницу',
     },
     loginPage: {
@@ -10,7 +10,7 @@ export default {
         username: 'Ваш ник',
         password: 'Пароль',
         enter: 'Войти',
-        haveAcc: 'Нет аккаунта?',
+        haveAcc: 'Нет аккаунта? ',
         registration: 'Регистрация',
       },
       errors: {

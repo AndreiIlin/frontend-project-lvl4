@@ -11,7 +11,8 @@ const Page404 = () => {
         {t('pageNotFound')}
       </h1>
       <p>
-        {t('navigate')} <Link to="/">{t('mainPage')}</Link>
+        {t('navigate')}
+        <Link to="/">{t('mainPage')}</Link>
       </p>
     </div>
   );

@@ -86,7 +86,8 @@ const RegistrationPage = () => {
                     placeholder={t('page.passwordConfirmation')}
                     value={formik.values.passwordConfirmation}
                     onChange={formik.handleChange}
-                    isInvalid={(formik.touched.passwordConfirmation && !!formik.errors.passwordConfirmation) || authFailed}
+                    isInvalid={(formik.touched.passwordConfirmation &&
+                      !!formik.errors.passwordConfirmation) || authFailed}
                   />
                   <Form.Control.Feedback type="invalid">
                     {formik.errors.passwordConfirmation ?? t('errors.regFailedPhrase')}
