@@ -25,11 +25,11 @@ const RegistrationPage = () => {
   useEffect(() => {
     inputRef.current.focus();
   }, []);
-  const formik = useFormik({
+  const f = useFormik({
     initialValues: {
       username: '',
       password: '',
-      passwordConfirmation: '',
+      passConfirmation: '',
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -55,42 +55,41 @@ const RegistrationPage = () => {
         <Col md="8" xxl="6">
           <Card className="shadow-sm">
             <Card.Body className="p-5">
-              <Form onSubmit={formik.handleSubmit}>
+              <Form onSubmit={f.handleSubmit}>
                 <h1 className="text-center mb-4">{t('page.registration')}</h1>
                 <FloatingLabel label={t('page.username')} controlId="username" className="mb-3">
                   <Form.Control
                     name="username"
                     placeholder={t('page.username')}
                     ref={inputRef}
-                    value={formik.values.username}
-                    onChange={formik.handleChange}
-                    isInvalid={(formik.touched.username && !!formik.errors.username) || authFailed}
+                    value={f.values.username}
+                    onChange={f.handleChange}
+                    isInvalid={(f.touched.username && !!f.errors.username) || authFailed}
                   />
-                  <Form.Control.Feedback type="invalid">{formik.errors.username}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">{f.errors.username}</Form.Control.Feedback>
                 </FloatingLabel>
                 <FloatingLabel label={t('page.password')} controlId="password" className="mb-3">
                   <Form.Control
                     type="password"
                     name="password"
                     placeholder={t('page.password')}
-                    value={formik.values.password}
-                    onChange={formik.handleChange}
-                    isInvalid={(formik.touched.password && !!formik.errors.password) || authFailed}
+                    value={f.values.password}
+                    onChange={f.handleChange}
+                    isInvalid={(f.touched.password && !!f.errors.password) || authFailed}
                   />
-                  <Form.Control.Feedback type="invalid">{formik.errors.password}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">{f.errors.password}</Form.Control.Feedback>
                 </FloatingLabel>
                 <FloatingLabel label={t('page.passwordConfirmation')} controlId="passwordConfirmation" className="mb-3">
                   <Form.Control
                     type="password"
                     name="passwordConfirmation"
                     placeholder={t('page.passwordConfirmation')}
-                    value={formik.values.passwordConfirmation}
-                    onChange={formik.handleChange}
-                    isInvalid={(formik.touched.passwordConfirmation &&
-                      !!formik.errors.passwordConfirmation) || authFailed}
+                    value={f.values.passConfirmation}
+                    onChange={f.handleChange}
+                    isInvalid={(f.touched.passConfirmation && !!f.errors.passConfirmation) || authFailed}
                   />
                   <Form.Control.Feedback type="invalid">
-                    {formik.errors.passwordConfirmation ?? t('errors.regFailedPhrase')}
+                    {f.errors.passConfirmation ?? t('errors.regFailedPhrase')}
                   </Form.Control.Feedback>
                 </FloatingLabel>
                 <Button variant="outline-primary" type="submit">{t('page.register')}</Button>

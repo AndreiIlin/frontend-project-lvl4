@@ -22,9 +22,9 @@ const channelsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchData.fulfilled, (state, action) => {
-        channelsAdapter.addMany(state, action.payload.channels);
-        state.currentChannelId = action.payload.currentChannelId; // eslint-disable-line no-param-reassign
+      .addCase(fetchData.fulfilled, (state, { payload }) => {
+        channelsAdapter.addMany(state, payload.channels);
+        state.currentChannelId = payload.currentChannelId; // eslint-disable-line no-param-reassign
       });
   },
 });
