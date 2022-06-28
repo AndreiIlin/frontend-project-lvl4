@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
-import validationSchema from '../utils/registrationSchema.js';
+import { useTranslation } from 'react-i18next';
 import { Button, Card, Col, Container, FloatingLabel, Form, Row } from 'react-bootstrap';
 import useAuth from '../hooks/useAuth.jsx';
 import axios from 'axios';
 import routes from '../utils/routes.js';
-import { useTranslation } from 'react-i18next';
-
+import validationSchema from '../utils/registrationSchema.js';
 
 const RegistrationPage = () => {
   const [authFailed, setAuthFailed] = useState(false);
@@ -17,7 +16,7 @@ const RegistrationPage = () => {
   const auth = useAuth();
   useEffect(() => {
     inputRef.current.focus();
-  },[]);
+  }, []);
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -40,9 +39,8 @@ const RegistrationPage = () => {
         }
         throw err;
       }
-    }
+    },
   });
-
   return (
     <Container fluid className="h-100">
       <Row className="justify-content-center align-content-center h-100">
@@ -82,7 +80,8 @@ const RegistrationPage = () => {
                     onChange={formik.handleChange}
                     isInvalid={(formik.touched.passwordConfirmation && !!formik.errors.passwordConfirmation) || authFailed}
                   />
-                  <Form.Control.Feedback type="invalid">{formik.errors.passwordConfirmation ?? t('errors.regFailedPhrase')}</Form.Control.Feedback>
+                  <Form.Control.Feedback
+                    type="invalid">{formik.errors.passwordConfirmation ?? t('errors.regFailedPhrase')}</Form.Control.Feedback>
                 </FloatingLabel>
                 <Button variant="outline-primary" type="submit">{t('page.register')}</Button>
               </Form>
@@ -93,5 +92,4 @@ const RegistrationPage = () => {
     </Container>
   );
 };
-
 export default RegistrationPage;

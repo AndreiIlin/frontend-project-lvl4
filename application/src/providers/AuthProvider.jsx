@@ -9,14 +9,15 @@ const AuthProvider = ({ children }) => {
     setLoggedIn(false);
   };
   return (
-    <AuthContext.Provider value={{
-      loggedIn,
-      logIn,
-      logOut,
-    }}>
+    <AuthContext.Provider
+      value={{
+        loggedIn,
+        logIn,
+        logOut,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
-
 export default AuthProvider;

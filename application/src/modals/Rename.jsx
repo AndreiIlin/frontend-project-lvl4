@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import useSocket from '../hooks/useSocket.jsx';
 import { useSelector } from 'react-redux';
-import { selectors } from '../slices/channelsSlice.js';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import useSocket from '../hooks/useSocket.jsx';
+import { selectors } from '../slices/channelsSlice.js';
 
 const Rename = ({
   onHide,

@@ -1,19 +1,17 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectors } from '../slices/messagesSlice.js';
 import filter from 'leo-profanity';
+import { selectors } from '../slices/messagesSlice.js';
 
 const Message = ({
   username,
   body,
-  filter,
-}) => {
-  return (
-    <div className="text-break mb-2">
-      <b>{username}</b>: {filter.clean(body)}
-    </div>
-  );
-};
+}) => (
+  <div className="text-break mb-2">
+    <b>{username}</b>
+    : {filter.clean(body)}
+  </div>
+);
 const MessagesBody = () => {
   filter.clearList();
   filter.add(filter.getDictionary('en'));
@@ -24,7 +22,7 @@ const MessagesBody = () => {
   return (
     <div id="messages-box" className="chat-messages overflow-auto px-5">
       {channelMessages && channelMessages.map((m) => (
-        <Message username={m.username} body={m.body} filter={filter} key={m.id} />
+        <Message username={m.username} body={m.body} key={m.id} />
       ))}
     </div>
   );

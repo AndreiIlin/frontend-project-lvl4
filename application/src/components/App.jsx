@@ -1,6 +1,4 @@
 import React from 'react';
-import Page404 from './Page404.jsx';
-import LoginPage from './LoginPage.jsx';
 import {
   BrowserRouter as Router,
   Routes,
@@ -18,6 +16,8 @@ import { I18nextProvider } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ErrorBoundary, Provider } from '@rollbar/react';
+import Page404 from './Page404.jsx';
+import LoginPage from './LoginPage.jsx';
 
 const PrivateRoute = ({ children }) => {
   const auth = useAuth();
@@ -39,30 +39,28 @@ const rollbarConfig = {
     environment: 'production',
   },
 };
-const App = () => {
-  return (
-    <Provider config={rollbarConfig}>
-      <ErrorBoundary>
-        <I18nextProvider i18n={i18n}>
-          <SocketProvider>
-            <AuthProvider>
-              <Router>
-                <div className="d-flex flex-column h-100">
-                  <NavbarLayout />
-                  <Routes>
-                    <Route path="/" element={<PrivateRoute><ChatPage /></PrivateRoute>} />
-                    <Route path="/login" element={<AuthUsersRoute><LoginPage /></AuthUsersRoute>} />
-                    <Route path="/signup" element={<AuthUsersRoute><RegistrationPage /></AuthUsersRoute>} />
-                    <Route path="*" element={<Page404 />} />
-                  </Routes>
-                </div>
-                <ToastContainer />
-              </Router>
-            </AuthProvider>
-          </SocketProvider>
-        </I18nextProvider>
-      </ErrorBoundary>
-    </Provider>
-  );
-};
+const App = () => (
+  <Provider config={rollbarConfig}>
+    <ErrorBoundary>
+      <I18nextProvider i18n={i18n}>
+        <SocketProvider>
+          <AuthProvider>
+            <Router>
+              <div className="d-flex flex-column h-100">
+                <NavbarLayout />
+                <Routes>
+                  <Route path="/" element={<PrivateRoute><ChatPage /></PrivateRoute>} />
+                  <Route path="/login" element={<AuthUsersRoute><LoginPage /></AuthUsersRoute>} />
+                  <Route path="/signup" element={<AuthUsersRoute><RegistrationPage /></AuthUsersRoute>} />
+                  <Route path="*" element={<Page404 />} />
+                </Routes>
+              </div>
+              <ToastContainer />
+            </Router>
+          </AuthProvider>
+        </SocketProvider>
+      </I18nextProvider>
+    </ErrorBoundary>
+  </Provider>
+);
 export default App;

@@ -3,10 +3,10 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeChannel, selectors } from '../slices/channelsSlice.js';
-import useSocket from '../hooks/useSocket.jsx';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { changeChannel, selectors } from '../slices/channelsSlice.js';
+import useSocket from '../hooks/useSocket.jsx';
 
 const Add = ({ onHide }) => {
   const { t } = useTranslation('translation', { keyPrefix: 'modals' });

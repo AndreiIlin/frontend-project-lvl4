@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import useSocket from '../hooks/useSocket.jsx';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import useSocket from '../hooks/useSocket.jsx';
 
 const Remove = ({
   onHide,
@@ -35,8 +35,14 @@ const Remove = ({
         <span className="lead">{t('removeConfirmation')}</span>
         <div className="d-flex justify-content-end">
           <Button variant="secondary" type="button" onClick={onHide} className="me-2">{t('buttons.cancel')}</Button>
-          <Button variant="danger" type="button" onClick={deleteChannel}
-                  disabled={disabled}>{t('buttons.delete')}</Button>
+          <Button
+            variant="danger"
+            type="button"
+            onClick={deleteChannel}
+            disabled={disabled}
+          >
+            {t('buttons.delete')}
+          </Button>
         </div>
       </Modal.Body>
     </Modal>

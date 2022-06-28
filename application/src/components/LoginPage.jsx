@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import validationSchema from '../utils/authorizationSchema.js';
 import { Button, Card, Col, Container, FloatingLabel, Form, Row } from 'react-bootstrap';
@@ -6,7 +7,6 @@ import axios from 'axios';
 import routes from '../utils/routes.js';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth.jsx';
-import { useTranslation } from 'react-i18next';
 
 const LoginPage = () => {
   const [authFailed, setAuthFailed] = useState(false);
@@ -16,7 +16,7 @@ const LoginPage = () => {
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.focus();
-  },[]);
+  }, []);
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -68,14 +68,17 @@ const LoginPage = () => {
                     onChange={formik.handleChange}
                     isInvalid={(formik.touched.password && !!formik.errors.password) || authFailed}
                   />
-                  <Form.Control.Feedback type="invalid">{formik.errors.password ?? t('errors.authFailedPhrase')}</Form.Control.Feedback>
+                  <Form.Control.Feedback
+                    type="invalid">{formik.errors.password ?? t('errors.authFailedPhrase')}</Form.Control.Feedback>
                 </FloatingLabel>
                 <Button variant="outline-primary" type="submit">{t('page.enter')}</Button>
               </Form>
             </Card.Body>
             <Card.Footer>
               <div className="text-center">
-                <span>{t('page.haveAcc')} </span>
+                <span>
+                  {t('page.haveAcc')}
+                </span>
                 <Link to={'/signup'}>{t('page.registration')}</Link>
               </div>
             </Card.Footer>

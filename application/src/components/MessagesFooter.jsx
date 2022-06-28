@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import useSocket from '../hooks/useSocket.jsx';
 import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 const MessagesFooter = () => {
   const { t } = useTranslation('translation', { keyPrefix: 'messages' });
@@ -28,7 +29,7 @@ const MessagesFooter = () => {
       if (response.status === 'ok') {
         setMessage('');
       } else {
-        alert(t('networkError'));
+        toast.error(t('networkError'));
       }
     });
   };
@@ -51,7 +52,9 @@ const MessagesFooter = () => {
             disabled={message === ''}
             onClick={sendMessage}
             className="rounded"
-          >{t('addButton')}</Button>
+          >
+            {t('addButton')}
+          </Button>
         </InputGroup>
       </Form>
     </div>

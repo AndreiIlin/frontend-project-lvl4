@@ -36,7 +36,7 @@ export default {
         passwordConfirmationReq: 'Поле "Повторите пароль" обязательно для заполнения!',
         passwordConfirmationSame: 'Пароли должны совпадать',
         regFailedPhrase: 'Пользователь с таким именем уже существует',
-      }
+      },
     },
     navbar: {
       exit: 'Выйти',
@@ -76,6 +76,6 @@ export default {
       messages_one: '{{ count }} сообщение',
       messages_few: '{{ count }} сообщения',
       messages_many: '{{ count }} сообщений',
-    }
+    },
   },
 };

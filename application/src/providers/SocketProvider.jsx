@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { io } from 'socket.io-client';
-import SocketContext from '../contexts/SocketContext.jsx';
 import { useDispatch } from 'react-redux';
+import SocketContext from '../contexts/SocketContext.jsx';
 import { addMessage } from '../slices/messagesSlice.js';
 import { addChannel, removeChannel, renameChannel } from '../slices/channelsSlice.js';
 
@@ -24,7 +24,7 @@ const SocketProvider = ({ children }) => {
         changes: { name: channel.name },
       }));
     });
-  }, []);
+  }, [dispatch, socket]);
   return (
     <SocketContext.Provider value={socket}>
       {children}
