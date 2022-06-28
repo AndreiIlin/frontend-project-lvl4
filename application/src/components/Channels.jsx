@@ -117,20 +117,25 @@ const Channels = () => {
       </div>
       <Nav as="ul" fill variant="pills" className="px-2">
         {channels.map((channel) => (
-          channel.removable ? <RemovableChannel
+          channel.removable ? (
+            <RemovableChannel
               data={{
                 channel,
                 currentChannelId,
                 showModal,
-              }} key={channel.id}
-            /> :
+              }}
+              key={channel.id}
+            />
+          ) : (
             <NotRemovableChannel
               data={{
                 channel,
                 currentChannelId,
                 showModal,
-              }} key={channel.id}
+              }}
+              key={channel.id}
             />
+          )
         ))}
       </Nav>
       {renderModal({
