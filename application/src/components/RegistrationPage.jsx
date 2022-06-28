@@ -82,7 +82,7 @@ const RegistrationPage = () => {
                 <FloatingLabel label={t('page.passwordConfirmation')} controlId="passwordConfirmation" className="mb-3">
                   <Form.Control
                     type="password"
-                    name="passwordConfirmation"
+                    name="passConfirmation"
                     placeholder={t('page.passwordConfirmation')}
                     value={f.values.passConfirmation}
                     onChange={f.handleChange}
