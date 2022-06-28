@@ -2,9 +2,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { Button, Card, Col, Container, FloatingLabel, Form, Row } from 'react-bootstrap';
-import useAuth from '../hooks/useAuth.jsx';
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  FloatingLabel,
+  Form,
+  Row,
+} from 'react-bootstrap';
 import axios from 'axios';
+import useAuth from '../hooks/useAuth.jsx';
 import routes from '../utils/routes.js';
 import validationSchema from '../utils/registrationSchema.js';
 
@@ -80,8 +88,9 @@ const RegistrationPage = () => {
                     onChange={formik.handleChange}
                     isInvalid={(formik.touched.passwordConfirmation && !!formik.errors.passwordConfirmation) || authFailed}
                   />
-                  <Form.Control.Feedback
-                    type="invalid">{formik.errors.passwordConfirmation ?? t('errors.regFailedPhrase')}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    {formik.errors.passwordConfirmation ?? t('errors.regFailedPhrase')}
+                  </Form.Control.Feedback>
                 </FloatingLabel>
                 <Button variant="outline-primary" type="submit">{t('page.register')}</Button>
               </Form>

@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Form, InputGroup } from 'react-bootstrap';
-import useSocket from '../hooks/useSocket.jsx';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import useSocket from '../hooks/useSocket.jsx';
 
 const MessagesFooter = () => {
   const { t } = useTranslation('translation', { keyPrefix: 'messages' });

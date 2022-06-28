@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
-import validationSchema from '../utils/authorizationSchema.js';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Card, Col, Container, FloatingLabel, Form, Row } from 'react-bootstrap';
 import axios from 'axios';
+import validationSchema from '../utils/authorizationSchema.js';
 import routes from '../utils/routes.js';
-import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth.jsx';
 
 const LoginPage = () => {
@@ -69,7 +69,8 @@ const LoginPage = () => {
                     isInvalid={(formik.touched.password && !!formik.errors.password) || authFailed}
                   />
                   <Form.Control.Feedback
-                    type="invalid">{formik.errors.password ?? t('errors.authFailedPhrase')}</Form.Control.Feedback>
+                    type="invalid">{formik.errors.password ?? t('errors.authFailedPhrase')}
+                  </Form.Control.Feedback>
                 </FloatingLabel>
                 <Button variant="outline-primary" type="submit">{t('page.enter')}</Button>
               </Form>
@@ -79,7 +80,7 @@ const LoginPage = () => {
                 <span>
                   {t('page.haveAcc')}
                 </span>
-                <Link to={'/signup'}>{t('page.registration')}</Link>
+                <Link to="/signup">{t('page.registration')}</Link>
               </div>
             </Card.Footer>
           </Card>

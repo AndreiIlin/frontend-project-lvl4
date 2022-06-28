@@ -5,6 +5,10 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
+import { I18nextProvider } from 'react-i18next';
+import { ToastContainer } from 'react-toastify';
+import { ErrorBoundary, Provider } from '@rollbar/react';
+import 'react-toastify/dist/ReactToastify.css';
 import useAuth from '../hooks/useAuth.jsx';
 import ChatPage from './ChatPage.jsx';
 import NavbarLayout from './NavbarLayout.jsx';
@@ -12,10 +16,6 @@ import AuthProvider from '../providers/AuthProvider.jsx';
 import SocketProvider from '../providers/SocketProvider.jsx';
 import RegistrationPage from './RegistrationPage.jsx';
 import i18n from '../i18n.js';
-import { I18nextProvider } from 'react-i18next';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { ErrorBoundary, Provider } from '@rollbar/react';
 import Page404 from './Page404.jsx';
 import LoginPage from './LoginPage.jsx';
 

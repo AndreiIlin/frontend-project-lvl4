@@ -1,8 +1,20 @@
 import React, { useState } from 'react';
-import { Button, ButtonGroup, Col, Dropdown, Nav } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  Button,
+  ButtonGroup,
+  Col,
+  Dropdown,
+  Nav,
+} from 'react-bootstrap';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { changeChannel, selectors } from '../slices/channelsSlice.js';
+import {
+  changeChannel,
+  selectors,
+} from '../slices/channelsSlice.js';
 import getModal from '../modals/index.js';
 
 const NotRemovableChannel = ({
@@ -92,7 +104,8 @@ const Channels = () => {
   return (
     <Col xs={4} md={2} className="border-end pt-4 px-0 bg-light">
       <div
-        className="d-flex flex-wrap justify-content-between align-items-center mb-2 ps-2 ps-xxl-4 ps-xl-3 pb-3 pe-2 border-bottom border-2">
+        className="d-flex flex-wrap justify-content-between align-items-center mb-2 ps-2 ps-xxl-4 ps-xl-3 pb-3 pe-2 border-bottom border-2"
+      >
         <span>{t('channels')}</span>
         <Button
           variant="outline-primary"
@@ -104,16 +117,20 @@ const Channels = () => {
       </div>
       <Nav as="ul" fill variant="pills" className="px-2">
         {channels.map((channel) => (
-          channel.removable ? <RemovableChannel data={{
-              channel,
-              currentChannelId,
-              showModal,
-            }} key={channel.id} /> :
-            <NotRemovableChannel data={{
-              channel,
-              currentChannelId,
-              showModal,
-            }} key={channel.id} />
+          channel.removable ? <RemovableChannel
+              data={{
+                channel,
+                currentChannelId,
+                showModal,
+              }} key={channel.id}
+            /> :
+            <NotRemovableChannel
+              data={{
+                channel,
+                currentChannelId,
+                showModal,
+              }} key={channel.id}
+            />
         ))}
       </Nav>
       {renderModal({
