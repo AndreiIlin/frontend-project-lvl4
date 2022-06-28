@@ -29,7 +29,7 @@ const RegistrationPage = () => {
     initialValues: {
       username: '',
       password: '',
-      passConfirmation: '',
+      passConfirm: '',
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -82,14 +82,14 @@ const RegistrationPage = () => {
                 <FloatingLabel label={t('page.passwordConfirmation')} controlId="passwordConfirmation" className="mb-3">
                   <Form.Control
                     type="password"
-                    name="passConfirmation"
+                    name="passConfirm"
                     placeholder={t('page.passwordConfirmation')}
-                    value={f.values.passConfirmation}
+                    value={f.values.passConfirm}
                     onChange={f.handleChange}
-                    isInvalid={(f.touched.passConfirmation && !!f.errors.passConfirmation) || authFailed}
+                    isInvalid={(f.touched.passConfirm && !!f.errors.passConfirm) || authFailed}
                   />
                   <Form.Control.Feedback type="invalid">
-                    {f.errors.passConfirmation ?? t('errors.regFailedPhrase')}
+                    {f.errors.passConfirm ?? t('errors.regFailedPhrase')}
                   </Form.Control.Feedback>
                 </FloatingLabel>
                 <Button variant="outline-primary" type="submit">{t('page.register')}</Button>

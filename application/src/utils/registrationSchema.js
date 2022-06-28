@@ -9,7 +9,7 @@ export default Yup.object().shape({
   password: Yup.string()
     .required(i18n.t('registrationPage.errors.passwordReq'))
     .min(6, i18n.t('registrationPage.errors.passwordMin')),
-  passConfirmation: Yup.string()
+  passConfirm: Yup.string()
     .required(i18n.t('registrationPage.errors.passwordConfirmationReq'))
     .oneOf([Yup.ref('password')], i18n.t('registrationPage.errors.passwordConfirmationSame')),
 });
