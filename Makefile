@@ -1,7 +1,9 @@
 start-backend:
-	make -C server start
+	npx start-server -p 5001
 start-frontend:
 	make -C application start
 install:
-	make -C server install
+	npm ci
 	make -C application install
+start:
+	make start-backend & make start-frontend

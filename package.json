@@ -6,8 +6,7 @@
   "type": "module",
   "scripts": {
     "install": "make install",
-    "start-backend": "make start-backend",
-    "start-frontend": "make start-frontend"
+    "start": "start-server -s ./application/build"
   },
   "repository": {
     "type": "git",
@@ -21,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/AndreiIlin/frontend-project-lvl4/issues"
   },
-  "homepage": "https://github.com/AndreiIlin/frontend-project-lvl4#readme"
+  "homepage": "https://github.com/AndreiIlin/frontend-project-lvl4#readme",
+  "dependencies": {
+    "@hexlet/chat-server": "^1.1.3"
+  }
 }
