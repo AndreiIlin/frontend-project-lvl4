@@ -5,6 +5,7 @@
   "main": "application/src/index.js",
   "type": "module",
   "scripts": {
+    "build": "npm run build --prefix application",
     "start": "start-server -s ./application/build"
   },
   "repository": {
