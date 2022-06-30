@@ -5,7 +5,6 @@
   "main": "application/src/index.js",
   "type": "module",
   "scripts": {
-    "install": "make install",
     "start": "start-server -s ./application/build"
   },
   "repository": {
