@@ -24,10 +24,10 @@ const PrivateRoute = ({ children }) => {
     loggedIn ? children : <Navigate to={routes.loginPage()} />
   );
 };
-const AuthUsersRoute = ({ children }) => {
+const AuthRoute = ({ children }) => {
   const { loggedIn } = useAuth();
   return (
-   loggedIn ? <Navigate to={routes.chatPage()} /> : children
+    loggedIn ? <Navigate to={routes.chatPage()} /> : children
   );
 };
 const App = () => (
@@ -38,8 +38,8 @@ const App = () => (
           <NavbarLayout />
           <Routes>
             <Route path={routes.chatPage()} element={<PrivateRoute><ChatPage /></PrivateRoute>} />
-            <Route path={routes.loginPage()} element={<AuthUsersRoute><LoginPage /></AuthUsersRoute>} />
-            <Route path={routes.registrationPage()} element={<AuthUsersRoute><RegistrationPage /></AuthUsersRoute>} />
+            <Route path={routes.loginPage()} element={<AuthRoute><LoginPage /></AuthRoute>} />
+            <Route path={routes.regPage()} element={<AuthRoute><RegistrationPage /></AuthRoute>} />
             <Route path={routes.page404()} element={<Page404 />} />
           </Routes>
           <Modal />

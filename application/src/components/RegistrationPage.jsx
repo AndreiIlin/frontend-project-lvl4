@@ -16,7 +16,6 @@ import * as Yup from 'yup';
 import useAuth from '../hooks/useAuth.jsx';
 import routes from '../utils/routes.js';
 
-
 const RegistrationPage = () => {
   const [authFailed, setAuthFailed] = useState(false);
   const { t } = useTranslation('translation', { keyPrefix: 'registrationPage' });

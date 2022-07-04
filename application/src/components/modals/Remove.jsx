@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import useChatApi from '../../hooks/useChatApi.jsx';
 import { useDispatch, useSelector } from 'react-redux';
+import useChatApi from '../../hooks/useChatApi.jsx';
 import { hideModal } from '../../slices/modalsSlice.js';
 
 const Remove = () => {

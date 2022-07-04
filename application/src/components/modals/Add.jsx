@@ -55,8 +55,13 @@ const Add = () => {
           </Form.Group>
           <div className="d-flex justify-content-end">
             <Button
-              variant="secondary" type="button" onClick={() => dispatch(hideModal())} className="me-2"
-            >{t('buttons.cancel')}</Button>
+              variant="secondary"
+              type="button"
+              onClick={() => dispatch(hideModal())}
+              className="me-2"
+            >
+              {t('buttons.cancel')}
+            </Button>
             <Button variant="primary" type="submit" disabled={disabled}>{t('buttons.send')}</Button>
           </div>
         </Form>

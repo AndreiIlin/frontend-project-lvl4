@@ -20,9 +20,9 @@ const MessagesBody = () => {
   useEffect(() => {
     scrollRef.current.scrollTo({
       top: 99999,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
-  },[channelMessages]);
+  }, [channelMessages]);
   return (
     <div id="messages-box" className="chat-messages overflow-auto px-5" ref={scrollRef}>
       {channelMessages && channelMessages.map((m) => (

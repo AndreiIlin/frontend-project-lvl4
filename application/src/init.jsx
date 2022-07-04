@@ -16,7 +16,6 @@ const rollbarConfig = {
     environment: 'production',
   },
 };
-
 export default async () => {
   const i18n = i18next.createInstance();
   await i18n
@@ -42,4 +41,4 @@ export default async () => {
       </RollbarProvider>
     </StoreProvider>
   );
-}
+};

@@ -5,7 +5,12 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import ChatApiContext from '../contexts/ChatApiContext.jsx';
 import { addMessage } from '../slices/messagesSlice.js';
-import { addChannel, changeChannel, removeChannel, renameChannel } from '../slices/channelsSlice.js';
+import {
+  addChannel,
+  changeChannel,
+  removeChannel,
+  renameChannel,
+} from '../slices/channelsSlice.js';
 import { hideModal } from '../slices/modalsSlice.js';
 
 const ChapApiProvider = ({ children }) => {
