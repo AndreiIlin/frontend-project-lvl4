@@ -5,62 +5,48 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
-import { I18nextProvider } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
-import { ErrorBoundary, Provider } from '@rollbar/react';
 import 'react-toastify/dist/ReactToastify.css';
 import useAuth from '../hooks/useAuth.jsx';
 import ChatPage from './ChatPage.jsx';
 import NavbarLayout from './NavbarLayout.jsx';
 import AuthProvider from '../providers/AuthProvider.jsx';
-import SocketProvider from '../providers/SocketProvider.jsx';
+import ChapApiProvider from '../providers/ChapApiProvider.jsx';
 import RegistrationPage from './RegistrationPage.jsx';
-import i18n from '../i18n.js';
 import Page404 from './Page404.jsx';
 import LoginPage from './LoginPage.jsx';
+import routes from '../utils/routes.js';
+import Modal from './modals/Modal.jsx';
 
 const PrivateRoute = ({ children }) => {
-  const auth = useAuth();
+  const { loggedIn } = useAuth();
   return (
-    auth.loggedIn ? children : <Navigate to="/login" />
+    loggedIn ? children : <Navigate to={routes.loginPage()} />
   );
 };
 const AuthUsersRoute = ({ children }) => {
-  const auth = useAuth();
+  const { loggedIn } = useAuth();
   return (
-    auth.loggedIn ? <Navigate to="/" /> : children
+   loggedIn ? <Navigate to={routes.chatPage()} /> : children
   );
 };
-const rollbarConfig = {
-  accessToken: 'ac693b1fd4d64135af205ac89dccd3bd',
-  captureUncaught: true,
-  captureUnhandledRejections: true,
-  payload: {
-    environment: 'production',
-  },
-};
 const App = () => (
-  <Provider config={rollbarConfig}>
-    <ErrorBoundary>
-      <I18nextProvider i18n={i18n}>
-        <SocketProvider>
-          <AuthProvider>
-            <Router>
-              <div className="d-flex flex-column h-100">
-                <NavbarLayout />
-                <Routes>
-                  <Route path="/" element={<PrivateRoute><ChatPage /></PrivateRoute>} />
-                  <Route path="/login" element={<AuthUsersRoute><LoginPage /></AuthUsersRoute>} />
-                  <Route path="/signup" element={<AuthUsersRoute><RegistrationPage /></AuthUsersRoute>} />
-                  <Route path="*" element={<Page404 />} />
-                </Routes>
-              </div>
-              <ToastContainer />
-            </Router>
-          </AuthProvider>
-        </SocketProvider>
-      </I18nextProvider>
-    </ErrorBoundary>
-  </Provider>
+  <ChapApiProvider>
+    <AuthProvider>
+      <Router>
+        <div className="d-flex flex-column h-100">
+          <NavbarLayout />
+          <Routes>
+            <Route path={routes.chatPage()} element={<PrivateRoute><ChatPage /></PrivateRoute>} />
+            <Route path={routes.loginPage()} element={<AuthUsersRoute><LoginPage /></AuthUsersRoute>} />
+            <Route path={routes.registrationPage()} element={<AuthUsersRoute><RegistrationPage /></AuthUsersRoute>} />
+            <Route path={routes.page404()} element={<Page404 />} />
+          </Routes>
+          <Modal />
+        </div>
+        <ToastContainer />
+      </Router>
+    </AuthProvider>
+  </ChapApiProvider>
 );
 export default App;

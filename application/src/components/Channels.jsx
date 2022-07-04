@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Button,
   ButtonGroup,
@@ -15,7 +15,7 @@ import {
   changeChannel,
   selectors,
 } from '../slices/channelsSlice.js';
-import getModal from '../modals/index.js';
+import { openModal } from '../slices/modalsSlice.js';
 
 const NotRemovableChannel = ({
   data:
@@ -44,7 +44,6 @@ const RemovableChannel = ({
     {
       channel,
       currentChannelId,
-      showModal,
     },
 }) => {
   const dispatch = useDispatch();
@@ -68,39 +67,32 @@ const RemovableChannel = ({
           <span className="visually-hidden">{t('control')}</span>
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Item onClick={() => showModal('removing', channel)}>{t('remove')}</Dropdown.Item>
-          <Dropdown.Item onClick={() => showModal('renaming', channel)}>{t('rename')}</Dropdown.Item>
+          <Dropdown.Item
+            onClick={() => dispatch(openModal({
+              type: 'removing',
+              item: channel,
+            }))}
+          >
+            {t('remove')}
+          </Dropdown.Item>
+          <Dropdown.Item
+            onClick={() => dispatch(openModal({
+              type: 'renaming',
+              item: channel,
+            }))}
+          >
+            {t('rename')}
+          </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </Nav.Item>
   );
 };
-const renderModal = ({
-  modalInfo,
-  hideModal,
-}) => {
-  if (!modalInfo.type) {
-    return null;
-  }
-  const Component = getModal(modalInfo.type);
-  return <Component modalInfo={modalInfo} onHide={hideModal} />;
-};
 const Channels = () => {
   const { t } = useTranslation('translation', { keyPrefix: 'channels' });
   const channels = useSelector(selectors.selectAll);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
-  const [modalInfo, setModalInfo] = useState({
-    type: null,
-    item: null,
-  });
-  const hideModal = () => setModalInfo({
-    type: null,
-    item: null,
-  });
-  const showModal = (type, item = null) => setModalInfo({
-    type,
-    item,
-  });
+  const dispatch = useDispatch();
   return (
     <Col xs={4} md={2} className="border-end pt-4 px-0 bg-light">
       <div
@@ -110,7 +102,10 @@ const Channels = () => {
         <Button
           variant="outline-primary"
           type="button"
-          onClick={() => showModal('adding')}
+          onClick={() => dispatch(openModal({
+            type: 'adding',
+            item: null,
+          }))}
         >
           +
         </Button>
@@ -122,7 +117,6 @@ const Channels = () => {
               data={{
                 channel,
                 currentChannelId,
-                showModal,
               }}
               key={channel.id}
             />
@@ -131,17 +125,12 @@ const Channels = () => {
               data={{
                 channel,
                 currentChannelId,
-                showModal,
               }}
               key={channel.id}
             />
           )
         ))}
       </Nav>
-      {renderModal({
-        modalInfo,
-        hideModal,
-      })}
     </Col>
   );
 };

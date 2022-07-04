@@ -2,10 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
-import useSocket from '../hooks/useSocket.jsx';
+import filter from 'leo-profanity';
+import useChatApi from '../hooks/useChatApi.jsx';
+import useAuth from '../hooks/useAuth.jsx';
 
 const MessagesFooter = () => {
+  const { getUsername } = useAuth();
   const { t } = useTranslation('translation', { keyPrefix: 'messages' });
   const [message, setMessage] = useState('');
   const inputRef = useRef();
@@ -16,22 +18,12 @@ const MessagesFooter = () => {
     setMessage(e.target.value);
   };
   const channelId = useSelector((state) => state.channels.currentChannelId);
-  const { username } = JSON.parse(localStorage.getItem('userId'));
+  const { sendNewMessage } = useChatApi();
+  const username = getUsername();
   const outgoingMessage = {
-    body: message,
+    body: filter.clean(message),
     username,
     channelId,
-  };
-  const socket = useSocket();
-  const sendMessage = (e) => {
-    e.preventDefault();
-    socket.emit('newMessage', outgoingMessage, (response) => {
-      if (response.status === 'ok') {
-        setMessage('');
-      } else {
-        toast.error(t('networkError'));
-      }
-    });
   };
   return (
     <div className="mt-auto px-5 py-3">
@@ -50,7 +42,10 @@ const MessagesFooter = () => {
             type="submit"
             variant="outline-primary"
             disabled={message === ''}
-            onClick={sendMessage}
+            onClick={(e) => {
+              e.preventDefault();
+              sendNewMessage(outgoingMessage, setMessage);
+            }}
             className="rounded"
           >
             {t('addButton')}

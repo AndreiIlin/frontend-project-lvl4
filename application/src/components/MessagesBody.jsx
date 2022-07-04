@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import filter from 'leo-profanity';
 import { selectors } from '../slices/messagesSlice.js';
 
 const Message = ({
@@ -10,20 +9,24 @@ const Message = ({
   <div className="text-break mb-2">
     <b>{username}</b>
     {': '}
-    {filter.clean(body)}
+    {body}
   </div>
 );
 const MessagesBody = () => {
-  filter.clearList();
-  filter.add(filter.getDictionary('en'));
-  filter.add(filter.getDictionary('ru'));
+  const scrollRef = useRef();
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const allMessages = useSelector(selectors.selectAll);
   const channelMessages = allMessages.filter(({ channelId }) => channelId === currentChannelId);
+  useEffect(() => {
+    scrollRef.current.scrollTo({
+      top: 99999,
+      behavior: 'smooth'
+    });
+  },[channelMessages]);
   return (
-    <div id="messages-box" className="chat-messages overflow-auto px-5">
+    <div id="messages-box" className="chat-messages overflow-auto px-5" ref={scrollRef}>
       {channelMessages && channelMessages.map((m) => (
-        <Message username={m.username} body={m.body} key={m.id} />
+        <Message username={m.username} body={m.body} scrollRef={scrollRef} key={m.id} />
       ))}
     </div>
   );

@@ -12,16 +12,17 @@ import {
   Row,
 } from 'react-bootstrap';
 import axios from 'axios';
+import * as Yup from 'yup';
 import useAuth from '../hooks/useAuth.jsx';
 import routes from '../utils/routes.js';
-import validationSchema from '../utils/registrationSchema.js';
+
 
 const RegistrationPage = () => {
   const [authFailed, setAuthFailed] = useState(false);
   const { t } = useTranslation('translation', { keyPrefix: 'registrationPage' });
   const navigate = useNavigate();
   const inputRef = useRef();
-  const auth = useAuth();
+  const { logIn } = useAuth();
   useEffect(() => {
     inputRef.current.focus();
   }, []);
@@ -31,14 +32,25 @@ const RegistrationPage = () => {
       password: '',
       passConfirm: '',
     },
-    validationSchema,
+    validationSchema: Yup.object().shape({
+      username: Yup.string()
+        .required(t('registrationPage.errors.usernameReq'))
+        .min(3, t('errors.usernameMin'))
+        .max(20, t('errors.usernameMax')),
+      password: Yup.string()
+        .required(t('errors.passwordReq'))
+        .min(6, t('errors.passwordMin')),
+      passConfirm: Yup.string()
+        .required(t('errors.passwordConfirmationReq'))
+        .oneOf([Yup.ref('password')], t('errors.passwordConfirmationSame')),
+    }),
     onSubmit: async (values) => {
       try {
         const response = await axios.post(routes.registrationPath(), values);
         localStorage.setItem('userId', JSON.stringify(response.data));
         setAuthFailed(false);
-        auth.logIn();
-        navigate('/');
+        logIn();
+        navigate(routes.chatPage());
       } catch (err) {
         if (err.isAxiosError && err.response.status === 409) {
           setAuthFailed(true);

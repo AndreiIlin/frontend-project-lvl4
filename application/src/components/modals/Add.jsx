@@ -1,29 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { Button, Form, Modal } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Button, Form, Modal } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
-import useSocket from '../hooks/useSocket.jsx';
-import { selectors } from '../slices/channelsSlice.js';
+import { selectors } from '../../slices/channelsSlice.js';
+import useChatApi from '../../hooks/useChatApi.jsx';
+import { hideModal } from '../../slices/modalsSlice.js';
 
-const Rename = ({
-  onHide,
-  modalInfo,
-}) => {
+const Add = () => {
   const { t } = useTranslation('translation', { keyPrefix: 'modals' });
-  const socket = useSocket();
+  const { addNewChannel } = useChatApi();
   const [disabled, setDisabled] = useState(false);
   const inputRef = useRef();
   useEffect(() => {
-    inputRef.current.select();
+    inputRef.current.focus();
   }, []);
   const channels = useSelector(selectors.selectAll);
   const channelsNames = channels.map((c) => c.name);
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      name: modalInfo.item.name,
+      name: '',
     },
     validationSchema: Yup.object().shape({
       name: Yup.string()
@@ -32,34 +30,22 @@ const Rename = ({
     }),
     onSubmit: () => {
       setDisabled(true);
-      socket.emit('renameChannel', {
-        id: modalInfo.item.id,
-        name: formik.values.name,
-      }, (response) => {
-        if (response.status === 'ok') {
-          toast.success(t('renameSuccess'));
-          onHide();
-        } else {
-          toast.error(t('networkError'), {
-            position: 'top-center',
-          });
-          setDisabled(false);
-        }
-      });
+      addNewChannel(formik.values);
+      setDisabled(false);
     },
   });
   return (
-    <Modal show onHide={onHide}>
+    <Modal show onHide={() => dispatch(hideModal())}>
       <Modal.Header closeButton>
-        <Modal.Title>{t('rename')}</Modal.Title>
+        <Modal.Title>{t('add')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group className="mb-3" controlId="addChannelModal">
-            <Form.Label className="visually-hidden">{t('renameLabel')}</Form.Label>
+            <Form.Label className="visually-hidden">{t('addLabel')}</Form.Label>
             <Form.Control
               name="name"
-              placeholder={t('renamePlaceholder')}
+              placeholder={t('addPlaceholder')}
               ref={inputRef}
               value={formik.values.name}
               onChange={formik.handleChange}
@@ -68,7 +54,9 @@ const Rename = ({
             <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>
           </Form.Group>
           <div className="d-flex justify-content-end">
-            <Button variant="secondary" type="button" onClick={onHide} className="me-2">{t('buttons.cancel')}</Button>
+            <Button
+              variant="secondary" type="button" onClick={() => dispatch(hideModal())} className="me-2"
+            >{t('buttons.cancel')}</Button>
             <Button variant="primary" type="submit" disabled={disabled}>{t('buttons.send')}</Button>
           </div>
         </Form>
@@ -76,4 +64,4 @@ const Rename = ({
     </Modal>
   );
 };
-export default Rename;
+export default Add;

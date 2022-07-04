@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Container, Navbar } from 'react-bootstrap';
 import useAuth from '../hooks/useAuth.jsx';
+import routes from '../utils/routes.js';
 
 const NavbarLayout = () => {
   const auth = useAuth();
@@ -9,7 +10,7 @@ const NavbarLayout = () => {
   return (
     <Navbar bg="white" expand="lg" className="shadow-sm">
       <Container>
-        <Navbar.Brand href="/">Hexlet Chat</Navbar.Brand>
+        <Navbar.Brand href={routes.chatPage()}>Hexlet Chat</Navbar.Brand>
         {auth.loggedIn ? <Button variant="primary" onClick={auth.logOut}>{t('exit')}</Button> : null}
       </Container>
     </Navbar>

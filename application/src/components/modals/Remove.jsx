@@ -1,40 +1,38 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
-import useSocket from '../hooks/useSocket.jsx';
+import useChatApi from '../../hooks/useChatApi.jsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { hideModal } from '../../slices/modalsSlice.js';
 
-const Remove = ({
-  onHide,
-  modalInfo,
-}) => {
+const Remove = () => {
   const { t } = useTranslation('translation', { keyPrefix: 'modals' });
   const [disabled, setDisabled] = useState(false);
-  const socket = useSocket();
+  const { removeCurrentChannel } = useChatApi();
+  const currentChannel = useSelector((state) => state.modals.item);
+  const dispatch = useDispatch();
   const deleteChannel = (e) => {
     e.preventDefault();
     setDisabled(true);
-    socket.emit('removeChannel', modalInfo.item, (response) => {
-      if (response.status === 'ok') {
-        toast.success(t('removeSuccess'));
-        onHide();
-      } else {
-        toast.error(t('networkError'), {
-          position: 'top-center',
-        });
-        setDisabled(false);
-      }
-    });
+    removeCurrentChannel(currentChannel);
+    setDisabled(false);
   };
   return (
-    <Modal show onHide={onHide}>
+    <Modal show onHide={() => dispatch(hideModal())}>
       <Modal.Header closeButton>
         <Modal.Title>{t('remove')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <span className="lead">{t('removeConfirmation')}</span>
         <div className="d-flex justify-content-end">
-          <Button variant="secondary" type="button" onClick={onHide} className="me-2">{t('buttons.cancel')}</Button>
+          <Button
+            variant="secondary"
+            type="button"
+            onClick={() => dispatch(hideModal())}
+            className="me-2"
+          >
+            {t('buttons.cancel')}
+          </Button>
           <Button
             variant="danger"
             type="button"

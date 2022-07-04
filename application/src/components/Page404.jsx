@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import page404 from '../assets/page404.jpeg';
+import routes from '../utils/routes.js';
 
 const Page404 = () => {
   const { t } = useTranslation('translation', { keyPrefix: 'page404' });
@@ -13,7 +14,7 @@ const Page404 = () => {
       </h1>
       <p>
         {t('navigate')}
-        <Link to="/">{t('mainPage')}</Link>
+        <Link to={routes.chatPage()}>{t('mainPage')}</Link>
       </p>
     </div>
   );

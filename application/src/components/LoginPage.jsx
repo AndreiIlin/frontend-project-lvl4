@@ -12,14 +12,14 @@ import {
   Row,
 } from 'react-bootstrap';
 import axios from 'axios';
-import validationSchema from '../utils/authorizationSchema.js';
+import * as Yup from 'yup';
 import routes from '../utils/routes.js';
 import useAuth from '../hooks/useAuth.jsx';
 
 const LoginPage = () => {
   const [authFailed, setAuthFailed] = useState(false);
   const { t } = useTranslation('translation', { keyPrefix: 'loginPage' });
-  const auth = useAuth();
+  const { logIn } = useAuth();
   const navigate = useNavigate();
   const inputRef = useRef();
   useEffect(() => {
@@ -30,14 +30,19 @@ const LoginPage = () => {
       username: '',
       password: '',
     },
-    validationSchema,
+    validationSchema: Yup.object().shape({
+      username: Yup.string()
+        .required(t('errors.usernameReq')),
+      password: Yup.string()
+        .required(t('errors.passwordReq')),
+    }),
     onSubmit: async (values) => {
       try {
         const response = await axios.post(routes.loginPath(), values);
         localStorage.setItem('userId', JSON.stringify(response.data));
         setAuthFailed(false);
-        auth.logIn();
-        navigate('/');
+        logIn();
+        navigate(routes.chatPage());
       } catch (err) {
         if (err.isAxiosError && err.response.status === 401) {
           setAuthFailed(true);
