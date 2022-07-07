@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import useChatApi from '../../hooks/useChatApi.jsx';
 import { selectors } from '../../slices/channelsSlice.js';
 import { hideModal } from '../../slices/modalsSlice.js';
@@ -20,21 +21,31 @@ const Rename = () => {
   const channelsNames = channels.map((c) => c.name);
   const currentChannel = useSelector((state) => state.modals.item);
   const dispatch = useDispatch();
+  const apiResponseHandle = (response) => {
+    if (response.status === 'ok') {
+      toast.success(t('renameSuccess'));
+      dispatch(hideModal());
+    } else {
+      toast.error(t('networkError'), {
+        position: 'top-center',
+      });
+    }
+  };
   const formik = useFormik({
     initialValues: {
       name: currentChannel.name,
     },
     validationSchema: Yup.object().shape({
       name: Yup.string()
-        .required(t('required'))
-        .notOneOf(channelsNames, t('alreadyExist')),
+        .required('required')
+        .notOneOf(channelsNames, 'alreadyExist'),
     }),
     onSubmit: () => {
       setDisabled(true);
       renameCurrentChannel({
         id: currentChannel.id,
         name: formik.values.name,
-      });
+      }, apiResponseHandle);
       setDisabled(false);
     },
   });
@@ -55,7 +66,9 @@ const Rename = () => {
               onChange={formik.handleChange}
               isInvalid={!!formik.errors.name}
             />
-            <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              {formik.errors.name ? t(formik.errors.name) : null}
+            </Form.Control.Feedback>
           </Form.Group>
           <div className="d-flex justify-content-end">
             <Button

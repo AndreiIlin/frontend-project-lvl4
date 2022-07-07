@@ -32,9 +32,9 @@ const LoginPage = () => {
     },
     validationSchema: Yup.object().shape({
       username: Yup.string()
-        .required(t('errors.usernameReq')),
+        .required('errors.usernameReq'),
       password: Yup.string()
-        .required(t('errors.passwordReq')),
+        .required('errors.passwordReq'),
     }),
     onSubmit: async (values) => {
       try {
@@ -68,9 +68,11 @@ const LoginPage = () => {
                     ref={inputRef}
                     value={formik.values.username}
                     onChange={formik.handleChange}
-                    isInvalid={(formik.touched.username && !!formik.errors.username) || authFailed}
+                    isInvalid={(formik.touched.username && formik.errors.username) || authFailed}
                   />
-                  <Form.Control.Feedback type="invalid">{formik.errors.username}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    {formik.errors.username ? t(formik.errors.username) : null}
+                  </Form.Control.Feedback>
                 </FloatingLabel>
                 <FloatingLabel label={t('page.password')} controlId="password" className="mb-3">
                   <Form.Control
@@ -79,10 +81,10 @@ const LoginPage = () => {
                     placeholder={t('page.password')}
                     value={formik.values.password}
                     onChange={formik.handleChange}
-                    isInvalid={(formik.touched.password && !!formik.errors.password) || authFailed}
+                    isInvalid={(formik.touched.password && formik.errors.password) || authFailed}
                   />
                   <Form.Control.Feedback type="invalid">
-                    {formik.errors.password ?? t('errors.authFailedPhrase')}
+                    {formik.errors.password ? t(formik.errors.password) : t('errors.authFailedPhrase')}
                   </Form.Control.Feedback>
                 </FloatingLabel>
                 <Button variant="outline-primary" type="submit">{t('page.enter')}</Button>
@@ -93,7 +95,7 @@ const LoginPage = () => {
                 <span>
                   {t('page.haveAcc')}
                 </span>
-                <Link to="/signup">{t('page.registration')}</Link>
+                <Link to={routes.regPage()}>{t('page.registration')}</Link>
               </div>
             </Card.Footer>
           </Card>

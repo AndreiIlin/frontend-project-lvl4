@@ -33,15 +33,15 @@ const RegistrationPage = () => {
     },
     validationSchema: Yup.object().shape({
       username: Yup.string()
-        .required(t('registrationPage.errors.usernameReq'))
-        .min(3, t('errors.usernameMin'))
-        .max(20, t('errors.usernameMax')),
+        .required('errors.usernameReq')
+        .min(3, 'errors.usernameMin')
+        .max(20, 'errors.usernameMax'),
       password: Yup.string()
-        .required(t('errors.passwordReq'))
-        .min(6, t('errors.passwordMin')),
+        .required('errors.passwordReq')
+        .min(6, 'errors.passwordMin'),
       passConfirm: Yup.string()
-        .required(t('errors.passwordConfirmationReq'))
-        .oneOf([Yup.ref('password')], t('errors.passwordConfirmationSame')),
+        .required('errors.passwordConfirmationReq')
+        .oneOf([Yup.ref('password')], 'errors.passwordConfirmationSame'),
     }),
     onSubmit: async (values) => {
       try {
@@ -77,7 +77,9 @@ const RegistrationPage = () => {
                     onChange={f.handleChange}
                     isInvalid={(f.touched.username && !!f.errors.username) || authFailed}
                   />
-                  <Form.Control.Feedback type="invalid">{f.errors.username}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    {f.errors.username ? t(f.errors.username) : null}
+                  </Form.Control.Feedback>
                 </FloatingLabel>
                 <FloatingLabel label={t('page.password')} controlId="password" className="mb-3">
                   <Form.Control
@@ -88,7 +90,9 @@ const RegistrationPage = () => {
                     onChange={f.handleChange}
                     isInvalid={(f.touched.password && !!f.errors.password) || authFailed}
                   />
-                  <Form.Control.Feedback type="invalid">{f.errors.password}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    {f.errors.password ? t(f.errors.password) : null}
+                  </Form.Control.Feedback>
                 </FloatingLabel>
                 <FloatingLabel label={t('page.passwordConfirmation')} controlId="passwordConfirmation" className="mb-3">
                   <Form.Control
@@ -100,7 +104,7 @@ const RegistrationPage = () => {
                     isInvalid={(f.touched.passConfirm && !!f.errors.passConfirm) || authFailed}
                   />
                   <Form.Control.Feedback type="invalid">
-                    {f.errors.passConfirm ?? t('errors.regFailedPhrase')}
+                    {f.errors.passConfirm ? t(f.errors.passConfirm) : t('errors.regFailedPhrase')}
                   </Form.Control.Feedback>
                 </FloatingLabel>
                 <Button variant="outline-primary" type="submit">{t('page.register')}</Button>

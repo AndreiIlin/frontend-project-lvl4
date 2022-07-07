@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import filter from 'leo-profanity';
+import { toast } from 'react-toastify';
 import useChatApi from '../hooks/useChatApi.jsx';
 import useAuth from '../hooks/useAuth.jsx';
 
@@ -25,6 +26,15 @@ const MessagesFooter = () => {
     username,
     channelId,
   };
+  const apiResponseHandle = (response) => {
+    if (response.status === 'ok') {
+      setMessage('');
+    } else {
+      toast.error(t('errors.networkError'), {
+        position: 'top-center',
+      });
+    }
+  };
   return (
     <div className="mt-auto px-5 py-3">
       <Form noValidate className="py-1 border rounded-2">
@@ -44,7 +54,7 @@ const MessagesFooter = () => {
             disabled={message === ''}
             onClick={(e) => {
               e.preventDefault();
-              sendNewMessage(outgoingMessage, setMessage);
+              sendNewMessage(outgoingMessage, apiResponseHandle);
             }}
             className="rounded"
           >

@@ -4,7 +4,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { selectors } from '../../slices/channelsSlice.js';
+import { toast } from 'react-toastify';
+import { changeChannel, selectors } from '../../slices/channelsSlice.js';
 import useChatApi from '../../hooks/useChatApi.jsx';
 import { hideModal } from '../../slices/modalsSlice.js';
 
@@ -19,18 +20,29 @@ const Add = () => {
   const channels = useSelector(selectors.selectAll);
   const channelsNames = channels.map((c) => c.name);
   const dispatch = useDispatch();
+  const apiResponseHandle = (response) => {
+    if (response.status === 'ok') {
+      dispatch(changeChannel(response.data.id));
+      toast.success(t('addSuccess'));
+      dispatch(hideModal());
+    } else {
+      toast.error(t('networkError'), {
+        position: 'top-center',
+      });
+    }
+  };
   const formik = useFormik({
     initialValues: {
       name: '',
     },
     validationSchema: Yup.object().shape({
       name: Yup.string()
-        .required(t('required'))
-        .notOneOf(channelsNames, t('alreadyExist')),
+        .required('required')
+        .notOneOf(channelsNames, 'alreadyExist'),
     }),
     onSubmit: () => {
       setDisabled(true);
-      addNewChannel(formik.values);
+      addNewChannel(formik.values, apiResponseHandle);
       setDisabled(false);
     },
   });
@@ -51,7 +63,9 @@ const Add = () => {
               onChange={formik.handleChange}
               isInvalid={!!formik.errors.name}
             />
-            <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+              {formik.errors.name ? t(formik.errors.name) : null}
+            </Form.Control.Feedback>
           </Form.Group>
           <div className="d-flex justify-content-end">
             <Button
